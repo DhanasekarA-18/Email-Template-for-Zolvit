@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import Spinner from "../Spinner";
+import beautify from "js-beautify";
 
 const DisplayOutput = ({ result }) => {
   const [outputType, setOutputType] = useState("parsed"); // Default to Parsed
   const [email, setEmail] = useState("selvamani@vakilsearch.com"); // State for email input
   const [emailLoader, setEmailLoader] = useState(false);
 
+  // Beautify the HTML result
+  const formattedResult = beautify.html(result, {
+    indent_size: 2,
+    space_in_empty_paren: true,
+  });
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(result);
+    navigator.clipboard.writeText(formattedResult);
     alert("Code copied to clipboard!");
   };
 
   const handleDownload = () => {
-    const blob = new Blob([result], { type: "text/plain" });
+    const blob = new Blob([formattedResult], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -38,8 +45,8 @@ const DisplayOutput = ({ result }) => {
         },
         body: JSON.stringify({
           email,
-          htmlContent: result,
-          codeContent: result,
+          htmlContent: formattedResult,
+          codeContent: formattedResult,
         }),
       });
 
@@ -118,11 +125,11 @@ const DisplayOutput = ({ result }) => {
       </div>
 
       {outputType === "parsed" ? (
-        <div dangerouslySetInnerHTML={{ __html: result }} />
+        <div dangerouslySetInnerHTML={{ __html: formattedResult }} />
       ) : (
         <div>
           <pre>
-            <code>{result}</code>
+            <code>{formattedResult}</code>
           </pre>
         </div>
       )}

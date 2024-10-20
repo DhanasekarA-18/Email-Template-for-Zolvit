@@ -1,4 +1,3 @@
-"use client";
 import BuildEmailTempLayout from "../Components/BuildEmailTempLayout";
 
 const BuildHtml = () => {
