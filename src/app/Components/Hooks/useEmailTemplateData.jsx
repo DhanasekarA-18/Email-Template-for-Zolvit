@@ -97,7 +97,7 @@ const useEmailTemplateData = ({
                   vertical-align: top;
                 "
                   >
-                    <table style="width: 100%; padding: 40px">
+                    <table style="width: 100%; padding: 20px">
                       <tr>
                         <td>${bodyData}</td>
                       </tr>
