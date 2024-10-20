@@ -59,8 +59,8 @@ const BuildEmailTempLayout = () => {
       {loading ? (
         <Loader />
       ) : (
-        <main className="bg-[#F8F8F8] h-[100dvh] flex flex-col">
-          <section className="flex gap-4 p-4">
+        <main className="bg-[#F8F8F8] h-full flex flex-col">
+          <section className="flex flex-col m-[16px] md:flex-row gap-4 ">
             <section className="flex-[2]  p-4 bg-white rounded-lg shadow-lg">
               <p className="text-[18px] leading-[20px] font-semibold text-[#001e39] pb-2">
                 Customize your code🧑‍💻🗡️
