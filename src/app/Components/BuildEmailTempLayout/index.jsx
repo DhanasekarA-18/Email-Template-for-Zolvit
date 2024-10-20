@@ -86,7 +86,7 @@ const BuildEmailTempLayout = () => {
                 name="footerToggle"
                 checked={footerVisible}
                 onChange={setFooterVisible}
-                label="Show Footer"
+                label="Edit Footer"
               />
               {footerVisible && (
                 <Footer
@@ -148,7 +148,9 @@ const BuildEmailTempLayout = () => {
 
             <section className="flex-[2] p-4 bg-[#f0f4ff] rounded-lg shadow-lg">
               <div className="flex justify-between items-center pb-[10px]">
-                <h1 className="text-xl font-semibold">Add Your Body Code</h1>
+                <h1 className="text-xl font-semibold">
+                  Enter your body content⬇️
+                </h1>
                 <button
                   onClick={handleResetData}
                   className="bg-red-600 text-white font-semibold p-2 rounded shadow hover:bg-red-700 transition duration-300"
