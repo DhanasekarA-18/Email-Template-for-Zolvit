@@ -135,9 +135,15 @@ const BuildEmailTempLayout = () => {
                 width={600}
                 height={300}
                 alt="email-template"
-                className="p-2"
+                className="p-2 rounded"
                 src={emailTemplateImage}
+                loading="eager"
               />
+              <marquee className="bg-[yellow] rounded p-2">
+                <p className="text-[green] text-[16px] leading-[18px] font-semibold">
+                  Build your template now🏦
+                </p>
+              </marquee>
             </section>
 
             <section className="flex-[2] p-4 bg-[#f0f4ff] rounded-lg shadow-lg">
