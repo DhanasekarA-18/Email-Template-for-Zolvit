@@ -57,51 +57,60 @@ const DisplayOutput = ({ result }) => {
   };
 
   return (
-    <div className="h-[100dvh] overflow-y-auto">
-      <div>
-        <label>
+    <div className="h-[100dvh] overflow-y-auto max-w-[600px]">
+      <div className="flex gap-2">
+        <label className="cursor-pointer">
           <input
             type="radio"
             value="html"
             checked={outputType === "html"}
             onChange={() => setOutputType("html")}
+            className="cursor-pointer"
           />
           HTML
         </label>
-        <label>
+        <label className="cursor-pointer">
           <input
             type="radio"
             value="parsed"
             checked={outputType === "parsed"}
             onChange={() => setOutputType("parsed")}
+            className="cursor-pointer"
           />
           Parsed
         </label>
       </div>
-      <button className="bg-blue-900 p-3 rounded mb-2" onClick={handleCopy}>
-        Copy Code
-      </button>
-      <button
-        className="bg-green-600 p-3 rounded mb-2"
-        onClick={handleDownload}
-      >
-        Download Code
-      </button>
-
+      <div className="flex gap-2">
+        <button
+          className="bg-blue-900 p-3 rounded mb-2 text-[#fff] font-semibold"
+          onClick={handleCopy}
+        >
+          Copy Code
+        </button>
+        <button
+          className="bg-green-600 p-3 rounded mb-2  text-[#fff] font-semibold "
+          onClick={handleDownload}
+        >
+          Download Code
+        </button>
+      </div>
       {/* Email input and button */}
-      <div className="my-4">
+      <div className="my-2 flex items-center gap-1">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter email"
-          className="border p-2 mb-2 w-[250px]"
+          className={`border p-2 mb-2 w-[250px] rounded ${
+            emailLoader ? "cursor-not-allowed" : ""
+          }`}
           disabled={emailLoader}
         />
         <button
-          className="bg-purple-700 p-3 rounded mb-2 w-[200px]"
+          className="bg-purple-700 rounded mb-2 w-[200px] h-[41px] text-center text-[#fff] font-semibold"
           onClick={handleSendEmail}
           disabled={emailLoader}
+          title="Send Email to your email address"
         >
           {emailLoader ? `Sending` : "Send"}
           {emailLoader && <Spinner />}

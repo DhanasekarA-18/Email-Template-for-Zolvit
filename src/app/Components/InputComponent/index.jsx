@@ -3,18 +3,20 @@ const InputComponent = ({
   type = "text",
   label = "",
   value = "",
-  onChange, // Include onChange as a prop
+  onChange,
 }) => {
   return (
-    <div className="pb-[1px]">
+    <div>
       <label className="text-blue-800 font-bold">{label}</label>
+      <br />
       <input
         type={type}
         placeholder={placeholder}
         value={value}
         onChange={(e) => {
-          onChange?.(e.target.value); // This will call the onChange function when the input value changes
+          onChange?.(e.target.value);
         }}
+        className="border-[2px] border-solid border-[green] w-full"
       />
     </div>
   );

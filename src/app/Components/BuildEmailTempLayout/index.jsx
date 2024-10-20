@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
+
 import Body from "../Body";
 import Footer from "../Footer";
 import Header from "../Header";
@@ -10,6 +12,8 @@ import InsertButton from "../InsertButton";
 import Loader from "../Loader";
 import InputComponent from "../InputComponent";
 
+import emailTemplateImage from "../../public/email.webp";
+
 const BuildEmailTempLayout = () => {
   const [bodyData, setBodyData] = useState("Dear Customer");
   const [addCtaCode, setAddCtaCode] = useState(false);
@@ -17,6 +21,10 @@ const BuildEmailTempLayout = () => {
   const [addCtaLink, setAddCtaLink] = useState("");
   const [addRegards, setAddRegards] = useState(true);
   const [loading, setLoading] = useState(true);
+
+  // State to manage header and footer visibility
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
 
   // use custom hook
   const {
@@ -43,7 +51,7 @@ const BuildEmailTempLayout = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 300);
   }, []);
 
   return (
@@ -51,27 +59,45 @@ const BuildEmailTempLayout = () => {
       {loading ? (
         <Loader />
       ) : (
-        <main className="h-[100%] bg-[yellow]">
-          <section className="flex gap-3 p-2">
-            <section className="flex-[2] h-[100dvh] p-2">
-              <h1>Add your header Code</h1>
-              <Header
-                value={headerData}
-                onChange={(event) => {
-                  setHeaderData(event.target.value);
-                }}
-                placeholder="Add header"
-                rows={7}
+        <main className="bg-[#F8F8F8] h-[100dvh] flex flex-col">
+          <section className="flex gap-4 p-4">
+            <section className="flex-[2]  p-4 bg-white rounded-lg shadow-lg">
+              <p className="text-[18px] leading-[20px] font-semibold text-[#001e39] pb-2">
+                Customize your code🧑‍💻🗡️
+              </p>
+              <InsertButton
+                name="headerToggle"
+                checked={headerVisible}
+                onChange={setHeaderVisible}
+                label="Edit Header"
               />
-              <h1>Add your Footer Code</h1>
-              <Footer
-                value={footerData}
-                onChange={(event) => {
-                  setFooterData(event.target.value);
-                }}
-                placeholder="Add footer"
-                rows={7}
+              {headerVisible && (
+                <Header
+                  value={headerData}
+                  onChange={(event) => {
+                    setHeaderData(event.target.value);
+                  }}
+                  placeholder="Edit Header"
+                  rows={7}
+                />
+              )}
+
+              <InsertButton
+                name="footerToggle"
+                checked={footerVisible}
+                onChange={setFooterVisible}
+                label="Show Footer"
               />
+              {footerVisible && (
+                <Footer
+                  value={footerData}
+                  onChange={(event) => {
+                    setFooterData(event.target.value);
+                  }}
+                  placeholder="Add footer"
+                  rows={7}
+                />
+              )}
 
               <InsertButton
                 name="addGreetings"
@@ -87,28 +113,39 @@ const BuildEmailTempLayout = () => {
                 label="Add CTA Bottom"
               />
 
-              {addCtaCode ? (
+              {addCtaCode && (
                 <div>
                   <InputComponent
                     label={"Enter CTA Placeholder*"}
                     value={ctaLabel}
                     onChange={setCtaLabel}
+                    placeholder={"Enter CTA Placeholder"}
                   />
                   <br />
                   <InputComponent
-                    label={"Enter CTA LINK*"}
+                    label={"Enter CTA Link Name*"}
                     value={addCtaLink}
                     onChange={setAddCtaLink}
+                    placeholder={"Enter Link Variable Name"}
                   />
                 </div>
-              ) : null}
+              )}
+
+              <Image
+                width={600}
+                height={300}
+                alt="email-template"
+                className="p-2"
+                src={emailTemplateImage}
+              />
             </section>
-            <section className="flex-[2] bg-[pink] p-2">
-              <div className="flex justify-between items-center">
-                <h1>Add your body Code</h1>
+
+            <section className="flex-[2] p-4 bg-[#f0f4ff] rounded-lg shadow-lg">
+              <div className="flex justify-between items-center pb-[10px]">
+                <h1 className="text-xl font-semibold">Add Your Body Code</h1>
                 <button
                   onClick={handleResetData}
-                  className="bg-red-800 text-center p-3 rounded m-2"
+                  className="bg-red-600 text-white font-semibold p-2 rounded shadow hover:bg-red-700 transition duration-300"
                 >
                   Reset Data
                 </button>
@@ -116,8 +153,8 @@ const BuildEmailTempLayout = () => {
               <Body editorData={bodyData} setEditorData={setBodyData} />
             </section>
 
-            <section className="flex-[3] bg-[green] p-2">
-              <h1>Email Template Output</h1>
+            <section className="flex-[3] p-4 bg-[#e3ffe6] rounded-lg shadow-lg">
+              <h1 className="text-xl font-semibold">Email Template Output</h1>
               <DisplayOutput result={finalEmailTemplate} />
             </section>
           </section>
