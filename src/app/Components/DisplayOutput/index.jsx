@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Spinner from "../Spinner";
 import beautify from "js-beautify";
 import toast from "react-hot-toast";
+import DOMPurify from "dompurify";
 import s from "./DisplayOutput.module.css";
 
 /* ── Icon helpers ── */
@@ -99,10 +100,6 @@ const DisplayOutput = ({ result }) => {
     }
   };
 
-  useEffect(() => {
-    alert('ok')
-  }, [])
-
   return (
     <div>
       {/* Tab Pills */}
@@ -190,7 +187,9 @@ const DisplayOutput = ({ result }) => {
             {outputType === "phone" && <div className={s.notch}></div>}
             <div
               className={s.previewBoxInner}
-              dangerouslySetInnerHTML={{ __html: formattedResult }}
+              dangerouslySetInnerHTML={{
+                __html: typeof window !== 'undefined' ? DOMPurify.sanitize(formattedResult) : formattedResult
+              }}
             />
           </div>
         </div>
