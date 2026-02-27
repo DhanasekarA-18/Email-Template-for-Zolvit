@@ -45,7 +45,7 @@ const BuildEmailTempLayout = () => {
   };
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 3000);
+    const t = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(t);
   }, []);
 
