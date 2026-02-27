@@ -99,10 +99,6 @@ const DisplayOutput = ({ result }) => {
     }
   };
 
-  useEffect(() => {
-    alert('ok')
-  }, [])
-
   return (
     <div>
       {/* Tab Pills */}
