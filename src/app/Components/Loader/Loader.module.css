@@ -1,0 +1,359 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at 60% 40%, #1e1b4b 0%, #0f172a 55%, #020617 100%);
+    animation: overlayFadeOut 0.6s ease forwards;
+    animation-delay: 4.4s;
+}
+
+@keyframes overlayFadeOut {
+    from {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    to {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+/* ── Ambient orbs ── */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    pointer-events: none;
+}
+
+.orb1 {
+    width: 420px;
+    height: 420px;
+    background: #6366f1;
+    top: -80px;
+    left: -80px;
+    animation: orbDrift 8s ease-in-out infinite alternate;
+}
+
+.orb2 {
+    width: 360px;
+    height: 360px;
+    background: #8b5cf6;
+    bottom: -60px;
+    right: -60px;
+    animation: orbDrift 10s ease-in-out infinite alternate-reverse;
+}
+
+.orb3 {
+    width: 200px;
+    height: 200px;
+    background: #06b6d4;
+    top: 40%;
+    left: 55%;
+    animation: orbDrift 6s ease-in-out infinite alternate;
+}
+
+@keyframes orbDrift {
+    from {
+        transform: scale(1) translate(0, 0);
+    }
+
+    to {
+        transform: scale(1.15) translate(20px, -20px);
+    }
+}
+
+/* ── Card ── */
+.card {
+    position: relative;
+    width: 420px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 44px 40px 36px;
+    backdrop-filter: blur(24px);
+    box-shadow:
+        0 0 0 1px rgba(99, 102, 241, 0.15),
+        0 32px 80px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(99, 102, 241, 0.08) inset;
+    animation: cardPop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    overflow: hidden;
+}
+
+@keyframes cardPop {
+    from {
+        opacity: 0;
+        transform: scale(0.88) translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* shimmer sweep */
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    background: linear-gradient(105deg,
+            transparent 35%,
+            rgba(255, 255, 255, 0.04) 50%,
+            transparent 65%);
+    background-size: 200% 100%;
+    animation: shimmer 2.4s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    from {
+        background-position: 200% center;
+    }
+
+    to {
+        background-position: -200% center;
+    }
+}
+
+/* top accent line */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    border-radius: 0 0 4px 4px;
+    background: linear-gradient(90deg, transparent, #6366f1, #8b5cf6, #06b6d4, transparent);
+    animation: accentPulse 2s ease-in-out infinite;
+}
+
+@keyframes accentPulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ── Logo area ── */
+.logoRow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.logoIcon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 60%, #06b6d4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 8px 28px rgba(99, 102, 241, 0.55);
+    animation: iconGlow 2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes iconGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 8px 28px rgba(99, 102, 241, 0.55);
+    }
+
+    50% {
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 8px 36px rgba(99, 102, 241, 0.8);
+    }
+}
+
+.logoText {
+    display: flex;
+    flex-direction: column;
+}
+
+.logoBrand {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logoProduct {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f1f5f9;
+    letter-spacing: -0.5px;
+    margin-top: 2px;
+}
+
+/* ── Status text ── */
+.statusText {
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+    margin-bottom: 18px;
+    min-height: 20px;
+    letter-spacing: 0.2px;
+    transition: opacity 0.3s;
+}
+
+.statusHighlight {
+    color: #a5b4fc;
+    font-weight: 600;
+}
+
+/* ── Progress bar ── */
+.progressWrap {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.progressBar {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4);
+    background-size: 200% 100%;
+    animation: progressShine 1.5s linear infinite;
+    transition: width 0.18s ease-out;
+    position: relative;
+}
+
+.progressBar::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+    border-radius: 99px;
+}
+
+@keyframes progressShine {
+    from {
+        background-position: 200% center;
+    }
+
+    to {
+        background-position: -200% center;
+    }
+}
+
+/* ── Percentage ── */
+.percentRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.percentValue {
+    font-size: 13px;
+    font-weight: 700;
+    color: #818cf8;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+}
+
+.percentDots {
+    display: flex;
+    gap: 5px;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.35);
+    animation: dotPulse 1.2s ease-in-out infinite;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes dotPulse {
+
+    0%,
+    100% {
+        background: rgba(99, 102, 241, 0.3);
+        transform: scale(1);
+    }
+
+    50% {
+        background: #818cf8;
+        transform: scale(1.4);
+    }
+}
+
+/* ── Footer ── */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footerAvatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
+.footerText {
+    font-size: 12px;
+    color: #475569;
+    font-weight: 400;
+}
+
+.footerName {
+    font-weight: 700;
+    background: linear-gradient(90deg, #818cf8, #c4b5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}

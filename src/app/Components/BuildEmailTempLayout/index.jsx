@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-
 import Body from "../Body";
 import Footer from "../Footer";
 import Header from "../Header";
@@ -12,7 +10,8 @@ import InsertButton from "../InsertButton";
 import Loader from "../Loader";
 import InputComponent from "../InputComponent";
 
-import emailTemplateImage from "../../public/email.webp";
+
+import s from "./BuildEmailTempLayout.module.css";
 
 const BuildEmailTempLayout = () => {
   const [bodyData, setBodyData] = useState("Dear Customer");
@@ -21,12 +20,9 @@ const BuildEmailTempLayout = () => {
   const [addCtaLink, setAddCtaLink] = useState("");
   const [addRegards, setAddRegards] = useState(true);
   const [loading, setLoading] = useState(true);
-
-  // State to manage header and footer visibility
   const [headerVisible, setHeaderVisible] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
 
-  // use custom hook
   const {
     headerData,
     footerData,
@@ -49,9 +45,8 @@ const BuildEmailTempLayout = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
+    const t = setTimeout(() => setLoading(false), 3000);
+    return () => clearTimeout(t);
   }, []);
 
   return (
@@ -59,114 +54,180 @@ const BuildEmailTempLayout = () => {
       {loading ? (
         <Loader />
       ) : (
-        <main className="bg-[#F8F8F8] h-full flex flex-col">
-          <section className="flex flex-col m-[16px] md:flex-row gap-4 ">
-            <section className="flex-[2]  p-4 bg-white rounded-lg shadow-lg">
-              <p className="text-[18px] leading-[20px] font-semibold text-[#001e39] pb-2">
-                Customize your code🧑‍💻🗡️
-              </p>
-              <InsertButton
-                name="headerToggle"
-                checked={headerVisible}
-                onChange={setHeaderVisible}
-                label="Edit Header"
-              />
-              {headerVisible && (
-                <Header
-                  value={headerData}
-                  onChange={(event) => {
-                    setHeaderData(event.target.value);
-                  }}
-                  placeholder="Edit Header"
-                  rows={7}
-                />
-              )}
-
-              <InsertButton
-                name="footerToggle"
-                checked={footerVisible}
-                onChange={setFooterVisible}
-                label="Edit Footer"
-              />
-              {footerVisible && (
-                <Footer
-                  value={footerData}
-                  onChange={(event) => {
-                    setFooterData(event.target.value);
-                  }}
-                  placeholder="Add footer"
-                  rows={7}
-                />
-              )}
-
-              <InsertButton
-                name="addGreetings"
-                checked={addRegards}
-                onChange={setAddRegards}
-                label="Add Regards"
-              />
-
-              <InsertButton
-                name="addCtaBottom"
-                checked={addCtaCode}
-                onChange={setAddCtaCode}
-                label="Add CTA Bottom"
-              />
-
-              {addCtaCode && (
-                <div>
-                  <InputComponent
-                    label={"Enter CTA Placeholder*"}
-                    value={ctaLabel}
-                    onChange={setCtaLabel}
-                    placeholder={"Enter CTA Placeholder"}
-                  />
-                  <br />
-                  <InputComponent
-                    label={"Enter CTA Link Name*"}
-                    value={addCtaLink}
-                    onChange={setAddCtaLink}
-                    placeholder={"Enter Link Variable Name"}
-                  />
-                </div>
-              )}
-
-              <Image
-                width={600}
-                height={300}
-                alt="email-template"
-                className="p-2 rounded"
-                src={emailTemplateImage}
-                loading="eager"
-              />
-              <marquee className="bg-[yellow] rounded p-2">
-                <p className="text-[green] text-[16px] leading-[18px] font-semibold">
-                  Build your template now🏦
-                </p>
-              </marquee>
-            </section>
-
-            <section className="flex-[2] p-4 bg-[#f0f4ff] rounded-lg shadow-lg">
-              <div className="flex justify-between items-center pb-[10px]">
-                <h1 className="text-xl font-semibold">
-                  Enter your body content⬇️
-                </h1>
-                <button
-                  onClick={handleResetData}
-                  className="bg-red-600 text-white font-semibold p-2 rounded shadow hover:bg-red-700 transition duration-300"
-                >
-                  Reset Data
-                </button>
+        <div className={s.root}>
+          {/* ── Top Bar ── */}
+          <header className={s.topbar}>
+            <div className={s.topbarBrand}>
+              <div className={s.topbarIcon}>✉️</div>
+              <div>
+                <div className={s.topbarTitle}>Email Template Builder</div>
+                <div className={s.topbarSubtitle}>Zolvit · Internal Tool</div>
               </div>
-              <Body editorData={bodyData} setEditorData={setBodyData} />
+            </div>
+            <span className={s.badge}>⚡ Live Preview</span>
+          </header>
+
+          {/* ── Three-column grid ── */}
+          <div className={s.grid}>
+
+            {/* ── Col 1 · Settings ── */}
+            <aside className={s.panel}>
+              <div className={s.panelHeader}>
+                <div className={`${s.panelHeaderIcon} ${s.violet}`}>⚙️</div>
+                <div>
+                  <div className={s.panelTitle}>Settings</div>
+                  <div className={s.panelDesc}>Configure template options</div>
+                </div>
+              </div>
+              <div className={s.panelBody}>
+
+                <div className={s.sectionLabel}>Sections</div>
+
+                <InsertButton
+                  name="headerToggle"
+                  checked={headerVisible}
+                  onChange={setHeaderVisible}
+                  label="Edit Header"
+                  icon="🗂️"
+                />
+                {headerVisible && (
+                  <div className={s.expandBox}>
+                    <Header
+                      value={headerData}
+                      onChange={(e) => setHeaderData(e.target.value)}
+                      placeholder="Edit Header"
+                      rows={5}
+                    />
+                  </div>
+                )}
+
+                <InsertButton
+                  name="footerToggle"
+                  checked={footerVisible}
+                  onChange={setFooterVisible}
+                  label="Edit Footer"
+                  icon="📑"
+                />
+                {footerVisible && (
+                  <div className={s.expandBox}>
+                    <Footer
+                      value={footerData}
+                      onChange={(e) => setFooterData(e.target.value)}
+                      placeholder="Add footer"
+                      rows={5}
+                    />
+                  </div>
+                )}
+
+                <hr className={s.divider} />
+                <div className={s.sectionLabel}>Content Options</div>
+
+                <InsertButton
+                  name="addGreetings"
+                  checked={addRegards}
+                  onChange={setAddRegards}
+                  label="Add Regards"
+                  icon="🤝"
+                />
+
+                <InsertButton
+                  name="addCtaBottom"
+                  checked={addCtaCode}
+                  onChange={setAddCtaCode}
+                  label="Add CTA Button"
+                  icon="🔗"
+                />
+
+                {addCtaCode && (
+                  <div className={s.expandBox}>
+                    <div className={s.ctaWrapper}>
+                      <InputComponent
+                        label="CTA Placeholder *"
+                        value={ctaLabel}
+                        onChange={setCtaLabel}
+                        placeholder="e.g. Upload Document"
+                      />
+                      <InputComponent
+                        label="CTA Link Variable *"
+                        value={addCtaLink}
+                        onChange={setAddCtaLink}
+                        placeholder="e.g. {{document_link}}"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Dev Info Card */}
+                <div className={s.infoCard}>
+                  <div className={s.infoCardTitle}>💡 Developer Tips</div>
+                  <ul className={s.infoList}>
+                    <li className={s.infoItem}>
+                      <span className={s.infoTag}>CTA Link</span>
+                      Use <code className={s.infoCode}>{"{{variable_name}}"}</code> format for dynamic links
+                    </li>
+                    <li className={s.infoItem}>
+                      <span className={s.infoTag}>Regards</span>
+                      Toggle adds <code className={s.infoCode}>Thanks &amp; Regards</code> block at the bottom
+                    </li>
+                    <li className={s.infoItem}>
+                      <span className={s.infoTag}>Header</span>
+                      Paste raw HTML for a custom banner or logo row
+                    </li>
+                    <li className={s.infoItem}>
+                      <span className={s.infoTag}>Export</span>
+                      Use <em>Copy Code</em> or <em>Download .html</em> from the output panel
+                    </li>
+                    <li className={s.infoItem}>
+                      <span className={s.infoTag}>Test</span>
+                      Enter any email and hit <em>Send</em> to preview in a real inbox
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </aside>
+
+            {/* ── Col 2 · Body Editor ── */}
+            <section className={s.panel}>
+              <div className={s.panelHeader}>
+                <div className={`${s.panelHeaderIcon} ${s.blue}`}>✍️</div>
+                <div className={s.bodyPanelHeader}>
+                  <div>
+                    <div className={s.panelTitle}>Body Content</div>
+                    <div className={s.panelDesc}>Compose your email body</div>
+                  </div>
+                  <button className={s.resetBtn} onClick={handleResetData}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+                      viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="1 4 1 10 7 10" />
+                      <path d="M3.51 15a9 9 0 1 0 .49-3.67" />
+                    </svg>
+                    Reset
+                  </button>
+                </div>
+              </div>
+              <div className={s.panelBody}>
+                <Body editorData={bodyData} setEditorData={setBodyData} />
+              </div>
             </section>
 
-            <section className="flex-[3] p-4 bg-[#e3ffe6] rounded-lg shadow-lg">
-              <h1 className="text-xl font-semibold">Email Template Output</h1>
-              <DisplayOutput result={finalEmailTemplate} />
+            {/* ── Col 3 · Output ── */}
+            <section className={s.panel}>
+              <div className={s.panelHeader}>
+                <div className={`${s.panelHeaderIcon} ${s.emerald}`}>📤</div>
+                <div>
+                  <div className={s.panelTitle}>Template Output</div>
+                  <div className={s.panelDesc}>Preview &amp; export your template</div>
+                </div>
+              </div>
+              <div className={s.panelBody}>
+                <DisplayOutput result={finalEmailTemplate} />
+              </div>
             </section>
-          </section>
-        </main>
+
+          </div>
+        </div>
       )}
     </>
   );
