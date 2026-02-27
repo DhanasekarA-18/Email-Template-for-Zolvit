@@ -1,10 +1,15 @@
-import TextArea from "../TextArea";
+"use client";
 
-const Footer = (props) => {
+import CodeEditor from "../CodeEditor";
+
+const Footer = ({ value, onChange }) => {
   return (
-    <>
-      <TextArea {...props} />
-    </>
+    <CodeEditor
+      value={value}
+      onChange={onChange}
+      label="Footer · HTML"
+    />
   );
 };
+
 export default Footer;

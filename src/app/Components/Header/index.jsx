@@ -1,10 +1,15 @@
-import TextArea from "../TextArea";
+"use client";
 
-const Header = (props) => {
+import CodeEditor from "../CodeEditor";
+
+const Header = ({ value, onChange }) => {
   return (
-    <div>
-      <TextArea {...props} />
-    </div>
+    <CodeEditor
+      value={value}
+      onChange={onChange}
+      label="Header · HTML"
+    />
   );
 };
+
 export default Header;
